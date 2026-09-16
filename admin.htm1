@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Panel</title>
+<style>body{font-family:sans-serif;background:#111;color:white;padding:15px}.box{background:#222;padding:20px;border-radius:12px;max-width:500px;margin:auto}input,textarea{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none;box-sizing:border-box}.btn{background:#00ff88;padding:14px;width:100%;border:none;border-radius:8px;font-weight:bold}.prev{background:#333;padding:10px;border-radius:8px;text-align:center;margin-top:15px}</style>
+</head>
+<body>
+<div class="box">
+<h2>Admin Panel - Soni</h2>
+<input type="text" id="bName" placeholder="Business Name">
+<input type="text" id="upiId" placeholder="UPI ID">
+<input type="text" id="chatId" placeholder="Chat ID - 8997697799">
+<textarea id="priceList" rows="5"></textarea>
+<button class="btn" onclick="save()">SAVE KARO</button>
+<p id="msg"></p>
+<div class="prev"><b id="pName"></b><br><img id="pQr" width="150"><br><small id="pUpi"></small></div>
+</div>
+<script>
+const TOKEN="8791716212:AAG8Rwj1OOg_rmWljehqWfFM5S0SEB5ogMI";
+let d=JSON.parse(localStorage.getItem('sonaliData'))||{name:"Sonali Services",upi:"sonali@oksbi",chatId:"8997697799",prices:"500 - Basic Plan\n1000 - Standard Plan\n2000 - Premium Plan"};
+document.getElementById('bName').value=d.name; document.getElementById('upiId').value=d.upi; document.getElementById('chatId').value=d.chatId; document.getElementById('priceList').value=d.prices;
+function update(){let upi=document.getElementById('upiId').value;let name=document.getElementById('bName').value;document.getElementById('pName').innerText=name;document.getElementById('pUpi').innerText=upi;document.getElementById('pQr').src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${upi}&pn=${name}`;}
+function save(){let obj={name:document.getElementById('bName').value,upi:document.getElementById('upiId').value,chatId:document.getElementById('chatId').value,prices:document.getElementById('priceList').value,token:TOKEN};localStorage.setItem('sonaliData',JSON.stringify(obj));document.getElementById('msg').innerText="Save Ho Gaya!";update();}
+document.getElementById('upiId').addEventListener('input',update);document.getElementById('bName').addEventListener('input',update);update();
+</script>
+</body>
+</html>
